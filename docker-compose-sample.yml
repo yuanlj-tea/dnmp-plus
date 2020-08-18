@@ -33,6 +33,25 @@ services:
     networks:
       - default
 
+  php71:
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP71_VERSION}
+        ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
+        PHP_EXTENSIONS: ${PHP71_EXTENSIONS}
+        MORE_EXTENSION_INSTALLER: php71.sh
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${PHP71_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP71_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP71_LOG_DIR}:/var/log/php
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
   php56:
     build:
       context: .
@@ -75,7 +94,7 @@ services:
     entrypoint: ["redis-server", "/etc/redis.conf"]
     networks:
       - default
-    
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -116,3 +135,4 @@ services:
 
 networks:
   default:
+    driver: host
