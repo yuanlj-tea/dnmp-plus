@@ -42,6 +42,6 @@ RUN curl -sS https://getcomposer.org/installer | php \
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \
 && composer global require hirak/prestissimo
 
-#RUN cd /var/www/html && composer create-project --prefer-dist laravel/laravel blog "5.8.*"
+RUN cd /var/www/html && composer create-project --prefer-dist laravel/laravel blog "5.8.*"
 
 WORKDIR /var/www/html
