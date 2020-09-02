@@ -67,6 +67,7 @@ function getRedisVersion()
     try {
         $redis = new Redis();
         $redis->connect('redis', 6379);
+        $redis->auth(123456);
         $info = $redis->info();
 
         return $info['redis_version'];
@@ -85,9 +86,9 @@ function printExtensions()
     foreach ($getLoadedExtensions as $name) {
         if ($name === 'mongodb'
             || $name === 'mongo'
-            || $name === 'tideways_xhprof'
+            // || $name === 'tideways_xhprof'
             || $name === 'tideways'
-            || $name === 'xhprof'
+            // || $name === 'xhprof'
         ) {
             echo "<li style='color: #FF9632;'>", $name, '=', phpversion($name), '</li>';
         } else {
