@@ -6,6 +6,7 @@ ARG MORE_EXTENSION_INSTALLER
 ARG ALPINE_REPOSITORIES
 ARG INSTALL_LARAVEL
 
+#COPY ./conf/resolv.conf /etc/resolv.conf
 COPY ./conf/sources.list /etc/apt/sources.list
 COPY ./extensions /tmp/extensions
 WORKDIR /tmp/extensions
@@ -42,6 +43,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \
 && composer global require hirak/prestissimo
 
+WORKDIR /var/www/html
+
 RUN cd /var/www/html && composer create-project --prefer-dist laravel/laravel blog "5.8.*"
 
-WORKDIR /var/www/html
