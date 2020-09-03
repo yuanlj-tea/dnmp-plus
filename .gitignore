@@ -2,6 +2,6 @@
 .DS_Store
 .env
 docker-compose.yml
-www/*
+#www/*
 !www/localhost/
 .php_cs.cache

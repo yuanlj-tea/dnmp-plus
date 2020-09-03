@@ -45,5 +45,5 @@ RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/compos
 
 WORKDIR /var/www/html
 
-RUN cd /var/www/html && composer create-project --prefer-dist laravel/laravel blog "5.8.*"
+#RUN cd /var/www/html && composer create-project --prefer-dist laravel/laravel blog "5.8.*"
 
