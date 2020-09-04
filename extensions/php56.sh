@@ -13,7 +13,7 @@ echo
 
 if [ -z "${EXTENSIONS##*,mcrypt,*}" ]; then
     echo "---------- Install mcrypt ----------"
-    apk add --no-cache libmcrypt-dev \
+    apt-get install -y libmcrypt-dev \
     && docker-php-ext-install ${MC} mcrypt
 fi
 
@@ -26,8 +26,8 @@ fi
 
 if [ -z "${EXTENSIONS##*,sodium,*}" ]; then
     echo "---------- Install sodium ----------"
-    apk add --no-cache libsodium-dev
-	docker-php-ext-install ${MC} sodium
+    apt-get install -y libsodium-dev
+	  docker-php-ext-install ${MC} sodium
 fi
 
 
@@ -42,7 +42,7 @@ fi
 
 if [ -z "${EXTENSIONS##*,memcached,*}" ]; then
     echo "---------- Install memcached ----------"
-	apk add --no-cache libmemcached-dev zlib-dev
+	apt-get install -y libmemcached-dev zlib-dev
     printf "\n" | pecl install memcached-2.2.0
     docker-php-ext-enable memcached
 fi
@@ -77,14 +77,15 @@ fi
 
 if [ -z "${EXTENSIONS##*,mongodb,*}" ]; then
     echo "---------- Install mongodb ----------"
-	apk add --no-cache unixodbc-dev
-    printf "\n" | pecl install mongodb
-    docker-php-ext-enable mongodb
+    mkdir mongodb \
+    && tar -xf mongodb-1.7.5.tgz -C mongodb --strip-components=1 \
+    && (cd mongodb && phpize && ./configure && make ${MC} && make install) \
+    && docker-php-ext-enable mongodb
 fi
 
 if [ -z "${EXTENSIONS##*,xhprof,*}" ]; then
     echo "---------- Install xhprof ----------"
-	apk add --no-cache unixodbc-dev
+	  apt-get install -y unixodbc-dev
     printf "\n" | pecl install xhprof-beta
     docker-php-ext-enable xhprof
 fi

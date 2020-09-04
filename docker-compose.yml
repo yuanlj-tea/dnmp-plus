@@ -5,6 +5,7 @@ services:
     ports:
       - "${NGINX_HTTP_HOST_PORT}:80"
       - "5001:81"
+      - "5002:82"
 #      - "${NGINX_HTTPS_HOST_PORT}:443"
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
@@ -17,6 +18,7 @@ services:
     depends_on:
       - php71
       - redis
+      - mongo
 
   php72:
     build:

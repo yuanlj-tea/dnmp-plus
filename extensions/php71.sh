@@ -38,7 +38,7 @@ fi
 
 if [ -z "${EXTENSIONS##*,memcached,*}" ]; then
     echo "---------- Install memcached ----------"
-	apt-get install -y libmemcached-dev zlib-dev
+	  apt-get install -y libmemcached-dev zlib-dev
     printf "\n" | pecl install memcached-3.1.3
     docker-php-ext-enable memcached
 fi

@@ -38,7 +38,7 @@ fi
 
 if [ -z "${EXTENSIONS##*,memcached,*}" ]; then
     echo "---------- Install memcached ----------"
-	apk add --no-cache libmemcached-dev zlib-dev
+	apt-get install -y libmemcached-dev zlib-dev
     printf "\n" | pecl install memcached-3.1.3
     docker-php-ext-enable memcached
 fi
@@ -63,23 +63,24 @@ fi
 
 if [ -z "${EXTENSIONS##*,pdo_sqlsrv,*}" ]; then
     echo "---------- Install pdo_sqlsrv ----------"
-	apk add --no-cache unixodbc-dev
+	apt-get install -y unixodbc-dev
     pecl install pdo_sqlsrv
     docker-php-ext-enable pdo_sqlsrv
 fi
 
 if [ -z "${EXTENSIONS##*,sqlsrv,*}" ]; then
     echo "---------- Install sqlsrv ----------"
-	apk add --no-cache unixodbc-dev
+	apt-get install -y unixodbc-dev
     printf "\n" | pecl install sqlsrv
     docker-php-ext-enable sqlsrv
 fi
 
 if [ -z "${EXTENSIONS##*,mongodb,*}" ]; then
     echo "---------- Install mongodb ----------"
-	apk add --no-cache unixodbc-dev
-    printf "\n" | pecl install mongodb
-    docker-php-ext-enable mongodb
+    mkdir mongodb \
+    && tar -xf mongodb-1.7.5.tgz -C mongodb --strip-components=1 \
+    && (cd mongodb && phpize && ./configure && make ${MC} && make install) \
+    && docker-php-ext-enable mongodb
 fi
 
 if [ -z "${EXTENSIONS##*,tideways,*}" ]; then
