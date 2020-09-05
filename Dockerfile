@@ -25,6 +25,8 @@ RUN apt-get update && apt-get install -y \
         git \
         librabbitmq-dev \
         apt-utils \
+        net-tools \
+        iputils-ping \
         --no-install-recommends
 
 
