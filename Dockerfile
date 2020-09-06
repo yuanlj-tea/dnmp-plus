@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y \
         apt-utils \
         net-tools \
         iputils-ping \
+        zlibc \
         --no-install-recommends
 
 
@@ -42,8 +43,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && cp composer.phar /usr/bin/composer \
     && mv composer.phar /usr/local/bin/composer
 ## use aliyun composer
-RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \
-&& composer global require hirak/prestissimo
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+#&& composer global require hirak/prestissimo
 
 WORKDIR /var/www/html
 
